@@ -1,2 +1,2 @@
-# resJson
-receive data with Json from some hardware
+# pm2.5接口
+- **v2.0** 添加了地理位置以及常用地點（重構了數據表）

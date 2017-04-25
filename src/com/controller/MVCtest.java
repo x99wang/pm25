@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/mvctest")
 public class MVCtest {
 	
-	@RequestMapping("/test")
+	@RequestMapping()
 	public String test()
 	{
 		return "test";

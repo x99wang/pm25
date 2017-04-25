@@ -13,79 +13,91 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 
-@RequestMapping("/pmUpdata")
+@RequestMapping("/updata")
 public class MainController {
 	
     String url="jdbc:mysql://localhost:3306/AirofTKK";
     String user="root";
     String password="wangxi29";  
-     
-	@RequestMapping("/Insert")
-	public String doIns(HttpServletRequest request)throws IOException, JSONException
+	
+	//String url="jdbc:mysql://139.199.153.220:3306/AirofTKK";
+	//String user="worlduser";
+	//String password="worldpassword";
+	
+	@RequestMapping()
+	public String doIns(HttpServletRequest request)
 	{
 		
 		FileOutputStream fout = null;
 		
-		StringBuffer str = new StringBuffer();   
-        try {
+		StringBuffer str = new StringBuffer();  
+		
+        try 
+        {
 
-        	// ‰≥ˆœ‘ æ
-        	fout = new FileOutputStream("out.txt");
+        	//ËæìÂá∫ÊòæÁ§∫
+        	//fout = new FileOutputStream("out.txt");
         	
-			// ‰»Î¡˜
-        	
-			//System.out.println("get input.....");
+			//ËæìÂÖ•ÊµÅ
+			//System.out.println("get input......");
 			InputStream inputa = request.getInputStream();
 			//System.out.println("get input secc.");
 			
 			if(inputa==null)
 				return "null";
-			//¥Ê»Îª∫¥Ê
+			
+			//Â≠òÂÖ•ÁºìÂ≠ò
 			//System.out.println("put input to Buffer.");  
 			BufferedInputStream in = new BufferedInputStream(inputa);
 			//System.out.println("put input secc.");  
 			
-			//¥Ê»Î◊÷∑˚¥Æ
+			//Â≠òÂÖ•Â≠óÁ¨¶‰∏≤
 			int i;  
-			char c;  
+			char c;
+			
 			while ((i=in.read())!=-1)
 			{  
 				c=(char)i;  
 				str.append(c);  
-			}  
-              }catch(Exception ex){  ex.printStackTrace();  }
+			}
+        }
+        catch(Exception ex)
+        {  ex.printStackTrace();	}
         
-        fout.write(str.toString().getBytes());
-        fout.write("\n\nget string secc!".getBytes());
+        /*try
+        {
+			fout.write(str.toString().getBytes());
+			fout.write("\n\nget string secc!".getBytes());
+        }
+        catch (IOException e)
+        {	e.printStackTrace();	}*/
         
         //System.out.println(str);
-        
         //System.out.println("get string secc!");
         
-        JSONObject obj = new JSONObject(str.toString());
+        JSONObject obj = null;
+		try
+		{	obj = new JSONObject(str.toString());	}
+		catch(JSONException e) 
+		{	e.printStackTrace();	}
         
         
-        //»°º¸÷µŒ™nameµƒvalue
+        //ÂèñÈîÆÂÄº‰∏∫nameÁöÑvalue
         //System.out.println(obj.get("name"));  
-        fout.write("start insert......\n".getBytes());
+        //fout.write("start insert......\n".getBytes());
         // String re=obj.get("name").toString();
         // System.out.println(re);
         
-        CompJson comj = new CompJson(obj);
         
-        
-        
-        InsertValue inv = new InsertValue(comj.getObj(),url,user,password);
+        InsertValue inv = new InsertValue(CompJson.doComp(obj),url,user,password);
         
         
         if(inv.InsertSql())
-        	fout.write("insert  ok !!!!!!\n".getBytes());
+        	System.out.println("insert  ok !!!!!!\n");
         else
-
-        	fout.write("insert  false !!!!!!\n".getBytes());
+        	System.out.println("insert  false !!!!!!\n");
         
-        
-        fout.close();
+        //fout.close();
         
         return "getok";
 	}
