@@ -343,7 +343,7 @@ struct SensorValuesBar getPMS5003()
     if(count > 36){
        break;  // have read all data, read ends
     }
-    else if(count == 4 || count == 6 || count == 8 || count == 10 || count == 12 || count == 14) highBits = readBuff;
+    else if(count == 4 || count == 6 || count == 8 || count == 10 || count == 12 || count == 14|| count == 16|| count == 18|| count == 20|| count == 22|| count == 24|| count == 26|| count == 28|| count == 30|| count == 32) highBits = readBuff;
     else if(count == 5){
       pmcf10 = 256*highBits + readBuff; // pm1.0
     }
